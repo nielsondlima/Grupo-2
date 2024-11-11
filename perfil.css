@@ -1,0 +1,53 @@
+/* Estilos para o container de conteúdo do perfil */
+.perfil-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para a imagem de perfil */
+.perfil-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Estilos para o container de informações do perfil */
+.perfil-info {
+    flex: 1;
+}
+
+/* Estilos para o nome do usuário */
+.perfil-info h3 {
+    font-size: 1.8rem;
+    color: #4682b4;
+    margin-bottom: 15px;
+}
+
+/* Estilos para os parágrafos de informação */
+.perfil-info p {
+    margin-bottom: 10px;
+}
+
+/* Estilos para o botão de edição */
+.edit-button {
+    background-color: #4682b4;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito hover para o botão de edição */
+.edit-button:hover {
+    background-color: #4169e1;
+}

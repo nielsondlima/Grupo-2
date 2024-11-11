@@ -1,0 +1,160 @@
+main {
+  padding: 2rem 0;
+  flex: 1;
+  display: flex; /* Torna o main um contêiner flexível */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  min-height: 100vh; /* Garante que o contêiner ocupe toda a altura da tela */
+}
+
+.imagem img {
+  width: 100%; /* Faz a imagem ocupar toda a largura do seu contêiner */
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: 10px; /* Adiciona bordas arredondadas à imagem */
+  margin-top: 10px; /* Espaço acima da imagem */
+  margin-bottom: 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  margin: 0; /* Remover a margem do card */
+  padding: 30px;
+  display: flex; /* Permite o uso de flexbox dentro do card */
+  flex-direction: column; /* Alinha os itens em coluna */
+  align-items: center; /* Centraliza os itens dentro do card */
+  height: auto;
+}
+
+
+.card-header {
+  display: flex;
+  align-items: center; /* Alinha o avatar e o nome verticalmente */
+  justify-content: flex-start; /* Garante que o conteúdo fique à esquerda */
+  width: 100%; /* Garante que o cabeçalho ocupe toda a largura do card */
+  margin-bottom: 15px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 15px; /* Espaço entre o avatar e o nome */
+  object-fit: cover;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.card-title {
+  justify-content: flex-start;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.comment-section {
+  border-top: 1x solid #ddd;
+  padding-top: 10px;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.comment-section button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.comment-section button:hover {
+  background-color: #f0f0f0; /* Cor de fundo acinzentada ao passar o mouse */
+  border-radius: 50%;
+}
+
+.icons-container {
+display: flex;
+justify-content: space-between; /* Distribui os botões nas extremidades esquerda e direita */
+align-items: center;
+width: 100%; /* Garante que os botões se ajustem ao container inteiro */
+padding: 0;
+}
+
+.icons-container button {
+background: none;
+border: none;
+cursor: pointer;
+}
+
+.icons-container img {
+width: 30px;
+height: 30px;
+}
+  
+/* Media Queries para responsividade */
+@media screen and (max-width: 1200px) {
+  .container {
+      width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header .container {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  nav {
+      margin-top: 20px;
+  }
+
+  nav a {
+      display: inline-block;
+      margin: 5px;
+  }
+
+  .section-content {
+      flex-direction: column;
+  }
+
+  .right-image, .left-image {
+      width: 100%;
+      max-width: 500px;
+      margin: 20px auto;
+  }
+
+  #profoportunidades .section-content {
+      flex-direction: column;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  header h1 {
+      font-size: 2rem;
+  }
+
+  section h2 {
+      font-size: 1.5rem;
+  }
+
+  .user-welcome {
+      font-size: 0.9rem;
+  }
+}

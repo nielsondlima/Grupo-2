@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Importação da fonte Roboto do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Reset básico para remover margens, paddings e definir box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos gerais para o corpo da página */
+body {
+    background-color: #f0f0f0; /* Fundo cinza claro */
+    color: #333; /* Cor do texto principal */
+    min-height: 100vh; /* Altura mínima de 100% da viewport */
+    width: 100%;
+    padding: 0;
+    line-height: 1.6; /* Espaçamento entre linhas */
+}
+
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #add8e6; /* Fundo azul bebê */
+    padding: 20px 0;
+    border-bottom: 5px solid #4682b4; /* Linha de separação */
+}
+
+/* Container flexível para o conteúdo do cabeçalho */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilo do título principal */
+header h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+/* Estilo da mensagem de boas-vindas */
+.user-welcome {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Estilos para a navegação */
+nav {
+    margin-top: 10px;
+}
+
+/* Estilos dos links de navegação */
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 20px;
+    background-color: #4682b4; /* Fundo azul mais escuro */
+    border-radius: 5px;
+    margin: 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito hover nos links de navegação */
+nav a:hover {
+    background-color: #4169e1; /* Azul Royal no hover */
+}
+
+/* Estilos para o conteúdo principal */
+main {
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos para as seções */
+section {
+    margin-bottom: 30px;
+}
+
+/* Estilos para os títulos das seções */
+section h2 {
+    font-size: 2rem;
+    color: #4682b4;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Layout flexível para o conteúdo das seções */
+.section-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family:"Poppins", sans-serif;
+}
+
+
+.titulo {
+    background-color: #007BFF;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+
+.login-container {
+    background-color: #6aa9e9;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    color: white;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+input[type="submit"] {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}

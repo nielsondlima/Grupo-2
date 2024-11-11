@@ -1,0 +1,374 @@
+/* Importando fonte Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Importação da fonte Roboto do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Reset básico para remover margens, paddings e definir box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos gerais para o corpo da página */
+body {
+    background-color: #f0f0f0; /* Fundo cinza claro */
+    color: #333; /* Cor do texto principal */
+    min-height: 100vh; /* Altura mínima de 100% da viewport */
+    width: 100%;
+    padding: 0;
+    line-height: 1.6; /* Espaçamento entre linhas */
+}
+
+
+/* Estilos para o cabeçalho */
+header {
+    background-color: #add8e6; /* Fundo azul bebê */
+    padding: 20px 0;
+    border-bottom: 5px solid #4682b4; /* Linha de separação */
+}
+
+/* Container flexível para o conteúdo do cabeçalho */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilo do título principal */
+header h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+/* Estilo da mensagem de boas-vindas */
+.user-welcome {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Estilos para a navegação */
+nav {
+    margin-top: 10px;
+}
+
+/* Estilos dos links de navegação */
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 20px;
+    background-color: #4682b4; /* Fundo azul mais escuro */
+    border-radius: 5px;
+    margin: 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito hover nos links de navegação */
+nav a:hover {
+    background-color: #4169e1; /* Azul Royal no hover */
+}
+
+/* Estilos para o conteúdo principal */
+main {
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos para as seções */
+section {
+    margin-bottom: 30px;
+}
+
+/* Estilos para os títulos das seções */
+section h2 {
+    font-size: 2rem;
+    color: #4682b4;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Layout flexível para o conteúdo das seções */
+.section-content {
+    display: flex;
+    flex-direction: column; /* Alinha o texto e o botão verticalmente */
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilo do body */
+body {
+    background-color: #f0f0f0; /* Cinza claro no fundo */
+    color: #333; /* Cor do texto */
+    min-height: 100vh;
+    width: 100%;
+    padding: 0;
+    line-height: 1.6; /* Altura da linha */
+}
+
+/* Estilo do header */
+header {
+    background-color: #add8e6; /* Azul bebê */
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 5px solid #4682b4; /* Linha de separação */
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+/* Estilo do nav */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 20px;
+    background-color: #4682b4; /* Azul mais escuro */
+    border-radius: 5px;
+    margin: 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #4169e1; /* Azul Royal no hover */
+}
+
+/* Estilo das seções principais */
+main {
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+section h2 {
+    font-size: 2rem;
+    color: #4682b4;
+    margin-bottom: 20px;
+    text-align: left; /* Alinhamento à esquerda */
+}
+
+/* Layout flexível para imagens e texto */
+.section-content {
+    display: flex;
+    justify-content: space-between; /* Alinha o texto e o botão verticalmente */
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+#sobrenos .section-content {
+    background-color: #f8f8f8;
+}
+
+/* Estilo do texto nas seções */
+section p {
+    flex: 1;
+    text-align: justify; /* Justificando os textos */
+    margin-bottom: 0;
+}
+
+/* Estilo das imagens */
+.right-image, .left-image {
+    width: 500px; /* Ajustando tamanho das imagens */
+    height: auto;
+    border-radius: 8px;
+    align-self: flex-end; /* Alinha a imagem ao lado do texto */
+}
+
+.text-button-container {
+    display: flex;
+    flex-direction: column; /* Organiza o texto e o botão verticalmente */
+    flex: 1; /* Ocupa o espaço restante */
+  }
+
+.primeiroLogin {
+    background-color: #4682b4; /* Mesma cor do nav */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block; /* Garante que o botão fique abaixo */
+    margin: 20px auto 0; /* Centraliza o botão abaixo e adiciona margem */
+}
+
+.primeiroLogin:hover {
+    background-color: #4169e1;
+    transform: scale(1.05);
+}
+
+.primeiroLogin:active {
+    transform: scale(1);
+    background-color: #365f91;
+}
+
+/* Alteração de ordem para imagem à esquerda */
+#profoportunidades .section-content {
+    flex-direction: row-reverse; /* Imagem à esquerda do texto */
+}
+
+/* Estilo do footer */
+footer {
+    background-color: #add8e6; /* Azul bebê */
+    padding: 20px 0;
+    text-align: center;
+    border-top: 5px solid #4682b4; /* Linha de separação */
+}
+
+footer p {
+    color: #ffffff;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/*tentando deixar responsivo*/
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Faz os elementos quebrarem linha se necessário */
+    justify-content: space-between;
+  }
+  
+  .item {
+    flex: 1 1 300px; /* Flexível e com largura mínima de 300px */
+  }
+
+  /* Media Queries para responsividade */
+@media screen and (max-width: 1200px) {
+    .container {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 20px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .section-content {
+        flex-direction: column;
+    }
+
+    .right-image, .left-image {
+        width: 100%;
+        max-width: 500px;
+        margin: 20px auto;
+    }
+
+    #profoportunidades .section-content {
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    section h2 {
+        font-size: 1.5rem;
+    }
+
+    .user-welcome {
+        font-size: 0.9rem;
+    }
+}
+
+.link-container {
+    text-align: center; /* Centraliza o texto dentro do container */
+    margin-top: 10px; /* Espaçamento acima do link */
+}
+
+.saiba-mais.button {
+    display: inline-block; /* Faz o link se comportar como um botão */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    background-color: #4682b4; /* Cor de fundo do botão */
+    color: #ffffff; /* Cor do texto do botão */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s ease; /* Efeito de transição */
+    margin-top: 10px; /* Espaçamento acima do botão */
+}
+
+.saiba-mais.button:hover {
+    background-color: #4169e1; /* Cor do botão ao passar o mouse */
+}
+
+/* Media Queries para responsividade */
+@media screen and (min-width: 769px) {
+    .section-content {
+        flex-direction: row; /* Alinha o texto e a imagem horizontalmente em telas maiores */
+    }
+    .right-image, .left-image {
+        margin-left: 20px; /* Espaçamento entre o texto e a imagem */
+    }
+}
+
+a {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: inherit; /* Mantém a cor do texto */
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4682b4;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #4169e1;
+}
