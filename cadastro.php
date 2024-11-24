@@ -1,8 +1,7 @@
 <?php
-include '../config/db.php';
+include 'config/db.php'; // Ajuste conforme a localização real do arquivo
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitização de dados de entrada
     $nome = htmlspecialchars($_POST['input-1']);
     $data_nasc = htmlspecialchars($_POST['date']);
     $genero = htmlspecialchars($_POST['genero']);
@@ -18,7 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo_usuario = htmlspecialchars($_POST['tipo_usuario']);
     $especialidade = isset($_POST['zona']) ? htmlspecialchars($_POST['zona']) : NULL;
 
-    // Uso de prepared statement
+    // Verifica a conexão
+    if (!$conn) {
+        die("Conexão com o banco falhou.");
+    }
+
     $stmt = $conn->prepare("INSERT INTO usuario (nome, email, senha, endereco, especialidade, data_nasc, genero, cpf, cidade, bairro, nome_mae, tipo_usuario)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssssssss", $nome, $email, $senha, $endereco, $especialidade, $data_nasc, $genero, $cpf, $cidade, $bairro, $nome_mae, $tipo_usuario);

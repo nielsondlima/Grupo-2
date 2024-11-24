@@ -1,3 +1,20 @@
+<?php
+// Verifique se o usuário deseja fazer logout
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    session_unset(); // Remove todas as variáveis de sessão
+    session_destroy(); // Destroi a sessão
+    header("Location: ../login.php"); // Redireciona para a página de login
+    exit();
+}
+
+// Verifique se o usuário está logado
+if (!isset($_SESSION['id'])) {
+    header("Location: ../login.php"); // Redireciona para a página de login
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,10 +30,10 @@
         <div class="container">
             <h1>ProLinker</h1>
             <nav>
-                <a href="index.html">Home</a>
-                <a href="post.html">Requisição</a>
-                <a href="perfil.html">Meu Perfil</a>
-                <a href="">Sair</a>
+                <a href="land-post.php">Home</a>
+                <a href="post.php">Requisição</a>
+                <a href="perfil_prestador.php">Meu Perfil</a>
+                <a href="logout.php">Sair</a>
             </nav>
             <div class="user-welcome">
                 <p>Bem-vindo, Vitor França</p>
