@@ -18,10 +18,10 @@
             <!-- Barra de navegação -->
             <nav>
                 <!-- Links para as diferentes páginas do site -->
-                <a href="index.html">Home</a>
-                <a href="criar-post.html">Criar Post</a>
-                <a href="meus-posts.html">Meus Posts</a>
-                <a href="perfil.html">Meu Perfil</a>
+                <a href="index.php">Home</a>
+                <a href="criar-post.php">Criar Post</a>
+                <a href="meus-posts.php">Meus Posts</a>
+                <a href="perfil.php">Meu Perfil</a>
                 <a href="">Sair</a>
             </nav>
             <!-- Mensagem de boas-vindas ao usuário -->

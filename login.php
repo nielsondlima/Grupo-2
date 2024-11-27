@@ -34,15 +34,14 @@
         <main class="container">
             <div class="login-container">
                 <h2>Login</h2>
-                <form action="#" method="post">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Senha:</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
+                <!-- Formulário de login -->
+                <form method="POST" action="retornologin.php">
+                    <label for="email">E-mail:</label>
+                    <input type="email" name="email" id="email" required>
+                    
+                    <label for="senha">Senha:</label>
+                    <input type="password" name="senha" id="senha" required>
+                    
                     <button type="submit">Entrar</button>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $username = 'root';
-$password = 'nielson'; // Insira a senha, se houver
+$password = ''; // Insira a senha, se houver
 $dbname = 'prolinker';
 
 $conn = new mysqli($host, $username, $password, $dbname);
