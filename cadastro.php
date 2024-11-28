@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Verificar se o tipo de usuário selecionado existe na tabela tipos_usuario
-    $sql_check_tipo = "SELECT * FROM tipos_usuario WHERE descricao = '$tipo_usuario'";
+    $sql_check_tipo = "SELECT * FROM tipos_usuario WHERE nome = '$tipo_usuario'";
     $result_check_tipo = $conn->query($sql_check_tipo);
 
     if ($result_check_tipo->num_rows == 0) {
