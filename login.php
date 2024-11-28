@@ -43,6 +43,9 @@
                     <input type="password" name="senha" id="senha" required>
                     
                     <button type="submit">Entrar</button>
+                    <button>
+                        <a href="form2.php" style="text-decoration: none; color: inherit;">Cadastre-se</a>
+                    </button>
                 </form>
             </div>
         </main>
