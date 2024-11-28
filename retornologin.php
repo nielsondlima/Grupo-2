@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($usuario['tipo_usuario_id'] == 3) {
                     header("Location: admin/admin_usuario.php");
                     exit;
-                } else if ($usuario['tipo_usuario_id'] == 2) {
+                } else if ($usuario['tipo_usuario_id'] == 1) {
                     header("Location: cliente/meus-posts.php");
                     exit;
-                } else if ($usuario['tipo_usuario_id'] == 1) {
+                } else if ($usuario['tipo_usuario_id'] == 2) {
                     header("Location: prestador/land-post.php");
                     exit;
                 } else {
