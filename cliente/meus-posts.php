@@ -19,7 +19,7 @@
             <nav>
                 <!-- Links para as diferentes páginas do site -->
                 <a href="../../Grupo-2/index.php">Home</a>
-                <a href="criar-post.php">Criar Post</a>
+                <a href="../../Grupo-2/solicitaservico.php">Criar Post</a>
                 <a href="../../Grupo-2/cliente/meus-posts.php">Meus Posts</a>
                 <a href="./perfil.php">Meu Perfil</a>
                 <a href="">Sair</a>
