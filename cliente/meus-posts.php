@@ -39,7 +39,7 @@
                 <!-- Exemplo de um post do usuário -->
                 <div class="post">
                     <!-- Imagem do problema -->
-                    <img src="../problemahidraulico.jpg" alt="Problema Hidráulico" class="post-image">
+                    <img src="../imgs/problemahidraulico.jpg" alt="Problema Hidráulico" class="post-image">
                     <div class="post-content">
                         <!-- Título do post -->
                         <h3>Vazamento na Cozinha</h3>

@@ -39,7 +39,7 @@
             <!-- Container para informações do perfil -->
             <div class="perfil-content">
                 <!-- Imagem de perfil do usuário -->
-                <img src="imgs/avatar.jpg" alt="Foto do Perfil" class="perfil-image">
+                <img src="../imgs/eletricista.jpg" alt="Foto do Perfil" class="perfil-image">
                 <!-- Informações detalhadas do perfil -->
                 <div class="perfil-info">
                     <h3>Nielson Lima</h3>
