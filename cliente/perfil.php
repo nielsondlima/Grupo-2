@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Perfil do Usuário</title>
     <!-- Links para os arquivos CSS -->
-    <link rel="stylesheet" href="stylehome.css">
-    <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="../stylehome.css">
+    <link rel="stylesheet" href="../perfil.css">
 </head>
 <body>
     <!-- Cabeçalho da página -->
