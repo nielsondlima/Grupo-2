@@ -19,7 +19,7 @@
             <nav>
                 <!-- Links para as diferentes páginas do site -->
                 <a href="index.php">Home</a>
-                <a href="solicitaservico.php">Criar Post</a>
+                <a href="criar-post.php">Criar Post</a>
                 <a href="meus-posts.php">Meus Posts</a>
                 <a href="perfil.php">Meu Perfil</a>
                 <a href="">Sair</a>
