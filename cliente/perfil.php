@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Perfil do Usuário</title>
     <!-- Links para os arquivos CSS -->
-    <link rel="stylesheet" href="stylehome.css">
-    <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="../stylehome.css">
+    <link rel="stylesheet" href="../perfil.css">
 </head>
 <body>
     <!-- Cabeçalho da página -->
@@ -39,7 +39,7 @@
             <!-- Container para informações do perfil -->
             <div class="perfil-content">
                 <!-- Imagem de perfil do usuário -->
-                <img src="imgs/avatar.jpg" alt="Foto do Perfil" class="perfil-image">
+                <img src="../imgs/eletricista.jpg" alt="Foto do Perfil" class="perfil-image">
                 <!-- Informações detalhadas do perfil -->
                 <div class="perfil-info">
                     <h3>Nielson Lima</h3>

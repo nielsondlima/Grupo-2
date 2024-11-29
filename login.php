@@ -104,6 +104,7 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
                     <input type="password" name="senha" id="senha" required>
                     
                     <button type="submit">Entrar</button>
+                    <button type="button" onclick="window.location.href='form2.php';">Cadastre-se</button>
                 </form>
             </div>
         </main>

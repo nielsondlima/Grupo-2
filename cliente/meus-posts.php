@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Meus Posts</title>
     <!-- Links para os arquivos CSS -->
-    <link rel="stylesheet" href="stylehome.css">
-    <link rel="stylesheet" href="posts.css">
+    <link rel="stylesheet" href="../stylehome.css">
+    <link rel="stylesheet" href="../stylepost.css">
 </head>
 <body>
     <!-- Cabeçalho da página -->
@@ -18,10 +18,10 @@
             <!-- Barra de navegação -->
             <nav>
                 <!-- Links para as diferentes páginas do site -->
-                <a href="index.php">Home</a>
+                <a href="../../Grupo-2/index.php">Home</a>
                 <a href="criar-post.php">Criar Post</a>
-                <a href="meus-posts.php">Meus Posts</a>
-                <a href="perfil.php">Meu Perfil</a>
+                <a href="../../Grupo-2/cliente/meus-posts.php">Meus Posts</a>
+                <a href="./perfil.php">Meu Perfil</a>
                 <a href="">Sair</a>
             </nav>
             <!-- Mensagem de boas-vindas ao usuário -->
@@ -39,7 +39,7 @@
                 <!-- Exemplo de um post do usuário -->
                 <div class="post">
                     <!-- Imagem do problema -->
-                    <img src="imgs/problemahidraulico.jpg" alt="Problema Hidráulico" class="post-image">
+                    <img src="../imgs/problemahidraulico.jpg" alt="Problema Hidráulico" class="post-image">
                     <div class="post-content">
                         <!-- Título do post -->
                         <h3>Vazamento na Cozinha</h3>
