@@ -91,12 +91,8 @@ if (isset($_POST['email']) && isset($_POST['senha'])) {
         <main class="container">
             <div class="login-container">
                 <h2>Login</h2>
-<<<<<<< HEAD
                 <!-- Formulário de login -->
                 <form method="POST" action="retornologin.php">
-=======
-                <form method="POST" action="">
->>>>>>> d3a2a51de2b2b805f52168455664936cac253e76
                     <label for="email">E-mail:</label>
                     <input type="email" name="email" id="email" required>
                     
