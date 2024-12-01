@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (isset($_SESSION['id'])) {
+    header("Location: index_logado.php");
+    exit();
+}
+// Código HTML da página inicial para visitantes
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,6 +13,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Home</title>
     <link rel="stylesheet" href="stylehome.css">
+    <style>
+        /* Garantir que o footer fique na parte inferior */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        main {
+            flex: 1; /* Faz o conteúdo ocupar o espaço disponível */
+        }
+        footer {
+            background: #f4f4f4;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <header>

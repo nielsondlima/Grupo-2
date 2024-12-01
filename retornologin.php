@@ -1,75 +1,59 @@
 <?php
-// Iniciar a sessão no início do arquivo
 session_start();
 
-// Incluir a configuração de conexão com o banco de dados
-include_once('config/db.php'); // Ajuste o caminho conforme necessário
+// Conexão com o banco de dados
+include_once('config/db.php');
 
-// Verificar se a conexão com o banco de dados foi estabelecida
-if (!isset($conn)) {
-    die('A variável $conn não foi definida. Verifique sua configuração no arquivo db.php.');
+// Verifica se a conexão está ativa
+if (!isset($conn) || $conn->connect_error) {
+    die('Erro na conexão com o banco de dados.');
 }
 
-// Verificar se o formulário foi enviado via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $conn->real_escape_string($_POST['email']);
+    $senha = $_POST['senha'];
 
-    // Verificar se os campos de email e senha não estão vazios
-    if (strlen($_POST['email']) == 0) {
-        echo "Preencha seu e-mail";
-    } else if (strlen($_POST['senha']) == 0) {
-        echo "Preencha sua senha";
-    } else {
+    // Verificar se o usuário existe no banco de dados
+    $sql = "SELECT * FROM usuario WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        // Obter os valores do formulário e limpar contra SQL Injection
-        $email = $conn->real_escape_string($_POST['email']);
-        $senha = $_POST['senha'];
+    if ($result->num_rows === 1) {
+        $usuario = $result->fetch_assoc();
 
-        // Consultar o banco de dados para verificar se o email existe
-        $sql_code = "SELECT * FROM usuario WHERE email = '$email'";
-        $sql_query = $conn->query($sql_code);
+        // Verificar se a senha está correta
+        if (password_verify($senha, $usuario['senha'])) {
+            $_SESSION['id'] = $usuario['id_usuario'];
+            $_SESSION['nome'] = $usuario['nome'];
+            $_SESSION['tipo_usuario'] = $usuario['tipo_usuario_id'];
 
-        if (!$sql_query) {
-            die("Falha na execução do código SQL: " . $conn->error);
-        }
-
-        $quantidade = $sql_query->num_rows;
-
-        if ($quantidade == 1) {
-            $usuario = $sql_query->fetch_assoc();
-
-            // Verificar se a senha fornecida corresponde ao hash armazenado
-            if (password_verify($senha, $usuario['senha'])) {
-
-                // Armazenar os dados do usuário na sessão
-                $_SESSION['id'] = $usuario['id_usuario'];
-                $_SESSION['nome'] = $usuario['nome'];
-                $_SESSION['tipo_usuario'] = $usuario['tipo_usuario_id']; // Armazenar o tipo de usuário (ID)
-
-                // Redirecionar conforme o tipo de usuário
-                if ($usuario['tipo_usuario_id'] == 3) {
+            // Redirecionar conforme o tipo de usuário
+            switch ($usuario['tipo_usuario_id']) {
+                case 3: // Admin
                     header("Location: admin/admin_usuario.php");
                     exit;
-                } else if ($usuario['tipo_usuario_id'] == 1) {
+                case 2: // Cliente
                     header("Location: cliente/meus-posts.php");
                     exit;
-                } else if ($usuario['tipo_usuario_id'] == 2) {
+                case 1: // Prestador
                     header("Location: prestador/land-post.php");
                     exit;
-                } else {
-                    echo "Falha ao logar! Tipo de usuário inválido.";
-                }
-
-            } else {
-                echo "Falha ao logar! E-mail ou senha incorretos.";
+                default:
+                    echo "Erro: Tipo de usuário inválido.";
+                    exit;
             }
-
         } else {
-            echo "Falha ao logar! E-mail não encontrado.";
+            echo "E-mail ou senha incorretos.";
         }
+    } else {
+        echo "E-mail não encontrado.";
     }
 
+    $stmt->close();
 } else {
-    // Se não for um POST, exibe a mensagem para enviar o formulário.
-    echo "Por favor, envie o formulário.";
+    echo "Acesso inválido!";
 }
+$conn->close();
 ?>

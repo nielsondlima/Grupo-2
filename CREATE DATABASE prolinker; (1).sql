@@ -48,8 +48,5 @@ CREATE TABLE log (
     FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
 );
 
-INSERT INTO usuario (nome, data_nasc, genero, nome_mae, cpf, senha, endereco, bairro, cidade, email, celular, tipo_usuario_id, especialidade) 
-VALUES 
-('Administrador', '1980-01-01', 'masculino', 'Maria da Silva', '000.000.000-00', 
- PASSWORD('senha_master'), 'Rua Exemplo, 123', 'Centro', 'Cidade Exemplo', 'admin@prolinker.com', '11999999999', 3, NULL);
+
 

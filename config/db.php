@@ -1,12 +1,13 @@
 <?php
 $host = 'localhost';
-$username = 'root';
-$password = ''; // Insira a senha, se houver
-$dbname = 'prolinker';
+$user = 'root';
+$password = '';
+$database = 'prolinker';
 
-$conn = new mysqli($host, $username, $password, $dbname);
+// Criar conexão com o banco de dados
+$conn = new mysqli($host, $user, $password, $database);
 
-// Verifique a conexão
+// Verificar conexão
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }

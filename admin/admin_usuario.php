@@ -1,9 +1,11 @@
 <?php
 session_start(); // Inicia a sessão
-
+session_start();
 include_once('../config/db.php'); // Inclui a conexão com MySQLi
 
-
+if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
+    header("Location: acesso_negado.php");
+}
 
 // Verifique se a conexão foi realizada corretamente
 if (!isset($conn)) {
