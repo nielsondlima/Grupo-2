@@ -15,10 +15,10 @@ $usuario_nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Usuário';
 
 // Determinar o link do perfil com base no tipo de usuário
 $perfil_link = match ($usuario_tipo) {
-    1 => 'prestador/perfil_prestador.php', // Prestador
-    2 => 'cliente/perfil_cliente.php',     // Cliente
-    3 => 'admin/admin_usuario.php',        // Admin
-    default => 'perfil_prestador.php',     // Fallback
+    1 => '/visitante/prestador/perfil_prestador.php', // Prestador
+    2 => '/visitante/cliente/perfil.php',             // Cliente
+    3 => '/visitante/admin/admin_usuario.php',        // Admin
+    default => '/visitante/cliente/perfil.php',       // Fallback para clientes
 };
 ?>
 
@@ -37,7 +37,7 @@ $perfil_link = match ($usuario_tipo) {
             <nav>
                 <a href="index_logado.php">Home</a> <!-- Página inicial -->
                 <?php if ($usuario_tipo == 1): ?> <!-- Mostrar apenas para prestador -->
-                    <a href="prestador/land-post.php">Requisição</a>
+                    <a href="/visitante/prestador/land-post.php">Requisição</a>
                 <?php endif; ?>
                 <a href="<?php echo $perfil_link; ?>">Meu Perfil</a> <!-- Direciona para o perfil -->
                 <a href="?logout=true">Sair</a> <!-- Botão de logout -->
