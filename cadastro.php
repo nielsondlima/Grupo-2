@@ -3,7 +3,7 @@
 session_start();
 
 // Incluir a configuração de conexão com o banco de dados
-include_once('config/db.php'); // Ajuste o caminho conforme necessário
+include_once('config/db.php');
 
 // Verificar se a conexão com o banco de dados foi estabelecida
 if (!isset($conn) || $conn->connect_error) {
@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cpf = $conn->real_escape_string(trim($_POST['input-5']));
     $senha = trim($_POST['input-6']);
     $confirm_senha = trim($_POST['input-6-5']);
-    $cep = $conn->real_escape_string(trim($_POST['cep']));
     $endereco = $conn->real_escape_string(trim($_POST['endereco']));
     $bairro = $conn->real_escape_string(trim($_POST['bairro']));
     $cidade = $conn->real_escape_string(trim($_POST['cidade']));
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Validar se as senhas são iguais
     if ($senha !== $confirm_senha) {
-        echo "As senhas não coincidem!";
+        echo "<script>alert('As senhas não coincidem!'); window.history.back();</script>";
         exit;
     }
 
@@ -43,29 +42,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result_check = $stmt_check->get_result();
 
     if ($result_check->num_rows > 0) {
-        echo "O CPF ou o e-mail já estão cadastrados!";
+        echo "<script>alert('O CPF ou o e-mail já estão cadastrados!'); window.history.back();</script>";
         $stmt_check->close();
         exit;
     }
     $stmt_check->close();
 
-    // Verificar se o tipo de usuário selecionado existe na tabela tipos_usuario
-    $sql_check_tipo = "SELECT id_tipo FROM tipos_usuario WHERE descricao = ?";
-    $stmt_check_tipo = $conn->prepare($sql_check_tipo);
-    $stmt_check_tipo->bind_param('s', $tipo_usuario);
-    $stmt_check_tipo->execute();
-    $result_check_tipo = $stmt_check_tipo->get_result();
-
-    if ($result_check_tipo->num_rows == 0) {
-        echo "Tipo de usuário inválido!";
-        $stmt_check_tipo->close();
+    // Definir o tipo de usuário com base na escolha e validação
+    if ($tipo_usuario === 'cliente') {
+        $tipo_usuario_id = 1; // Cliente
+        $especialidade = null; // Cliente não tem especialidade
+    } elseif ($tipo_usuario === 'prestador') {
+        if (empty($especialidade)) {
+            echo "<script>alert('Prestadores devem ter uma especialidade!'); window.history.back();</script>";
+            exit;
+        }
+        $tipo_usuario_id = 2; // Prestador
+    } else {
+        echo "<script>alert('Tipo de usuário inválido!'); window.history.back();</script>";
         exit;
     }
-
-    // Obter o ID do tipo de usuário
-    $usuario_tipo = $result_check_tipo->fetch_assoc();
-    $tipo_usuario_id = $usuario_tipo['id_tipo'];
-    $stmt_check_tipo->close();
 
     // Hash da senha
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
@@ -97,16 +93,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     );
 
     if ($stmt_insert->execute()) {
-        // Cadastro bem-sucedido, redireciona para a tela de login
-        header('Location: login.php');
-        exit;
+        echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = 'login.php';</script>";
     } else {
-        echo "Erro ao cadastrar usuário: " . $stmt_insert->error;
+        echo "<script>alert('Erro ao cadastrar usuário. Tente novamente mais tarde.');</script>";
     }
 
     $stmt_insert->close();
     $conn->close();
 } else {
-    echo "Acesso inválido!";
+    echo "<script>alert('Acesso inválido!'); window.location.href = 'index.php';</script>";
 }
 ?>

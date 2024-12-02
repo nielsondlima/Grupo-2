@@ -87,8 +87,8 @@ $conn->close();
         <div class="container">
             <h1>ProLinker</h1>
             <nav>
-                <a href="../index_logado.php">Home</a> <!-- Página inicial -->
-                <a href="../prestador/land-post.php">Requisição</a> <!-- Botão para land-post -->
+                <a href="index_prestador.php">Home</a> <!-- Página inicial -->
+                <a href="../prestador/land-post.php">Solicitações</a> <!-- Botão para land-post -->
                 <a href="perfil_prestador.php">Meu Perfil</a> <!-- Página de perfil -->
                 <a href="?action=logout">Sair</a> <!-- Botão de logout -->
             </nav>

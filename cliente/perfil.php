@@ -83,7 +83,7 @@ $conn->close();
         <div class="container">
             <h1>ProLinker</h1>
             <nav>
-                <a href="../index_logado.php">Home</a>
+                <a href="index_cliente.php">Home</a>
                 <a href="criar-post.php">Criar Post</a>
                 <a href="meus-posts.php">Meus Posts</a>
                 <a href="perfil_cliente.php">Meu Perfil</a>

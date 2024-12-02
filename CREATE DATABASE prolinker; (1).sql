@@ -1,3 +1,4 @@
+-- Criar o banco de dados
 CREATE DATABASE prolinker;
 USE prolinker;
 
@@ -29,6 +30,24 @@ CREATE TABLE usuario (
     FOREIGN KEY (tipo_usuario_id) REFERENCES tipos_usuario(id_tipo)
 );
 
+-- Tabela de categorias
+CREATE TABLE categorias (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Inserir categorias
+INSERT INTO categorias (nome) VALUES 
+('Manutenção e Reformas'),
+('Tecnologia'),
+('Saúde'),
+('Marketing'),
+('Produção'),
+('Fotografia'),
+('Tradução'),
+('Educação'),
+('Artes Visuais'),
+('Administração');
 
 -- Tabela de posts
 CREATE TABLE posts (
@@ -36,7 +55,9 @@ CREATE TABLE posts (
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    categoria INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (categoria) REFERENCES categorias(id_categoria),
     FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
 );
 
@@ -47,6 +68,3 @@ CREATE TABLE log (
     data_hora DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
 );
-
-
-

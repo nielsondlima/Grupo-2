@@ -1,59 +1,76 @@
 <?php
-session_start();
+session_start(); // Inicia a sessão
 
-// Conexão com o banco de dados
+// Incluir a configuração de conexão com o banco de dados
 include_once('config/db.php');
 
-// Verifica se a conexão está ativa
-if (!isset($conn) || $conn->connect_error) {
-    die('Erro na conexão com o banco de dados.');
-}
+// Verificar se o formulário foi enviado via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Receber e limpar os valores do formulário
+    $email = trim($_POST['email']);
+    $senha = trim($_POST['senha']);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $conn->real_escape_string($_POST['email']);
-    $senha = $_POST['senha'];
-
-    // Verificar se o usuário existe no banco de dados
-    $sql = "SELECT * FROM usuario WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $usuario = $result->fetch_assoc();
-
-        // Verificar se a senha está correta
-        if (password_verify($senha, $usuario['senha'])) {
-            $_SESSION['id'] = $usuario['id_usuario'];
-            $_SESSION['nome'] = $usuario['nome'];
-            $_SESSION['tipo_usuario'] = $usuario['tipo_usuario_id'];
-
-            // Redirecionar conforme o tipo de usuário
-            switch ($usuario['tipo_usuario_id']) {
-                case 3: // Admin
-                    header("Location: admin/admin_usuario.php");
-                    exit;
-                case 2: // Cliente
-                    header("Location: cliente/meus-posts.php");
-                    exit;
-                case 1: // Prestador
-                    header("Location: prestador/land-post.php");
-                    exit;
-                default:
-                    echo "Erro: Tipo de usuário inválido.";
-                    exit;
-            }
-        } else {
-            echo "E-mail ou senha incorretos.";
-        }
-    } else {
-        echo "E-mail não encontrado.";
+    // Verificar se os campos foram preenchidos
+    if (empty($email) || empty($senha)) {
+        echo "<script>alert('Por favor, preencha todos os campos!'); window.history.back();</script>";
+        exit();
     }
 
-    $stmt->close();
+    // Preparar consulta para verificar o e-mail
+    $sql = "SELECT id_usuario, nome, senha, tipo_usuario_id FROM usuario WHERE email = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Verificar se o e-mail foi encontrado
+        if ($result->num_rows === 1) {
+            $usuario = $result->fetch_assoc();
+
+            // Verificar a senha
+            if (password_verify($senha, $usuario['senha'])) {
+                // Armazenar informações do usuário na sessão
+                $_SESSION['id'] = $usuario['id_usuario'];
+                $_SESSION['nome'] = $usuario['nome'];
+                $_SESSION['tipo_usuario'] = $usuario['tipo_usuario_id'];
+
+                // Redirecionar com base no tipo de usuário
+                switch ($usuario['tipo_usuario_id']) {
+                    case 1: // Cliente
+                        header("Location: /visitante/cliente/index_cliente.php");
+                        break;
+                    case 2: // Prestador
+                        header("Location: /visitante/prestador/index_prestador.php");
+                        break;
+                    case 3: // Admin
+                        header("Location: /visitante/admin/index_admin.php");
+                        break;
+                    default:
+                        echo "<script>alert('Tipo de usuário inválido!'); window.history.back();</script>";
+                        exit();
+                }
+                exit();
+            } else {
+                // Senha incorreta
+                echo "<script>alert('Senha incorreta!'); window.history.back();</script>";
+                exit();
+            }
+        } else {
+            // E-mail não encontrado
+            echo "<script>alert('E-mail não encontrado!'); window.history.back();</script>";
+            exit();
+        }
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('Erro no sistema. Tente novamente mais tarde.'); window.history.back();</script>";
+        exit();
+    }
 } else {
-    echo "Acesso inválido!";
+    // Acesso direto ao arquivo sem ser via POST
+    echo "<script>alert('Acesso inválido!'); window.location.href = 'login.php';</script>";
+    exit();
 }
+
 $conn->close();
 ?>
