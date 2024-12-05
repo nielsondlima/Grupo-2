@@ -2,25 +2,26 @@
 session_start();
 
 // Verificar se o usuário está logado
-if (!isset($_SESSION['id']) || $_SESSION['tipo_usuario'] != 1) {
+if (!isset($_SESSION['id'])) {
     header("Location: ../login.php");
     exit();
 }
 
-// Incluir a configuração de conexão com o banco de dados
+// Incluir o arquivo de conexão com o banco de dados
 include_once('../config/db.php');
 
-// Obter o ID do cliente logado
+// Consultar os posts do cliente logado
 $user_id = $_SESSION['id'];
-
-// Buscar os posts do cliente logado
-$sql_posts = "SELECT posts.id_post, posts.title, posts.content, posts.created_at, usuario.celular 
-              FROM posts 
-              INNER JOIN usuario ON posts.user_id = usuario.id_usuario 
+$sql_posts = "SELECT posts.id_post, posts.title, posts.content, posts.created_at, usuario.celular, categorias.nome AS categoria
+              FROM posts
+              INNER JOIN usuario ON posts.user_id = usuario.id_usuario
+              INNER JOIN categorias ON posts.categoria = categorias.id_categoria
               WHERE posts.user_id = ? 
               ORDER BY posts.created_at DESC";
+
+// Preparar a consulta
 $stmt = $conn->prepare($sql_posts);
-$stmt->bind_param('i', $user_id);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -33,7 +34,88 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Meus Posts</title>
     <link rel="stylesheet" href="../stylehome.css">
-    <link rel="stylesheet" href="../stylepost.css">
+    <style>
+        /* Estilo para a navegação */
+        nav {
+            background-color: #007BFF; /* Cor de fundo azul */
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #fff; /* Cor do texto branca */
+            padding: 10px 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+            color: #fff; /* Cor do texto continua branca */
+        }
+
+        .post {
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f4f4;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .post p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .post-meta {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .category {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column; /* Coloca os posts um abaixo do outro */
+            gap: 20px; /* Adiciona um espaçamento entre os posts */
+        }
+
+        .user-welcome {
+            font-size: 1.1em;
+            color: #fff; /* Cor branca para o texto "Bem-vindo" */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -59,12 +141,16 @@ $result = $stmt->get_result();
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($post = $result->fetch_assoc()): ?>
                         <div class="post">
+                            <!-- Exibir a categoria com o nome -->
+                            <div class="category"><?php echo htmlspecialchars($post['categoria']); ?></div>
                             <img src="../imgs/solicitacao.png" alt="Imagem Padrão do Post" class="post-image">
                             <div class="post-content">
                                 <h3><?php echo htmlspecialchars($post['title']); ?></h3>
                                 <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
-                                <p><strong>Publicado em:</strong> <?php echo date('d/m/Y H:i', strtotime($post['created_at'])); ?></p>
-                                <p><strong>Telefone para contato:</strong> <?php echo htmlspecialchars($post['celular']); ?></p>
+                                <div class="post-meta">
+                                    <p><strong>Publicado em:</strong> <?php echo date('d/m/Y H:i', strtotime($post['created_at'])); ?></p>
+                                    <p><strong>Telefone para contato:</strong> <?php echo htmlspecialchars($post['celular']); ?></p>
+                                </div>
                             </div>
                         </div>
                     <?php endwhile; ?>

@@ -95,10 +95,14 @@ $conn->close();
             <h1>ProLinker</h1>
             <nav>
                 <a href="index_cliente.php">Home</a>
+                <a href="criar-post.php">Criar Post</a>
                 <a href="meus-posts.php">Meus Posts</a>
                 <a href="perfil.php">Meu Perfil</a>
                 <a href="?logout=true">Sair</a>
             </nav>
+            <div class="user-welcome">
+                <p>Bem-vindo, <?php echo htmlspecialchars($_SESSION['nome']); ?></p>
+            </div>
         </div>
     </header>
 
