@@ -1,11 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['id'])) {
-    header("Location: index_logado.php");
-    exit();
-}
-// Código HTML da página inicial para visitantes
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
