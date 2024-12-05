@@ -76,7 +76,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Perfil do Usuário</title>
     <link rel="stylesheet" href="../stylehome.css">
-    <link rel="stylesheet" href="../perfil.css">
+    <link rel="stylesheet" href="../perfil2.css">
 </head>
 <body>
     <header>
@@ -97,8 +97,8 @@ $conn->close();
 
     <main class="container">
         <section id="perfil">
-            <h2>Editar Meu Perfil</h2>
             <form method="POST" action="" class="perfil-form">
+            <h2>Editar Meu Perfil</h2>
                 <div class="form-group">
                     <label for="nome">Nome:</label>
                     <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>

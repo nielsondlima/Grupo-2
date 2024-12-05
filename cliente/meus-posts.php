@@ -37,7 +37,6 @@ $result = $stmt->get_result();
     <style>
         /* Estilo para a navegação */
         nav {
-            background-color: #007BFF; /* Cor de fundo azul */
             padding: 10px 0;
         }
 
