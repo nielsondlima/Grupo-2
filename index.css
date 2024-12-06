@@ -1,0 +1,40 @@
+/* Garantir que o footer fique na parte inferior */
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+main {
+    flex: 1; /* Faz o conteúdo ocupar o espaço disponível */
+}
+
+.section-content p {
+    font-size: 1.1rem; /* Aumenta o tamanho da fonte do parágrafo */
+    line-height: 2; /* Ajusta a altura da linha para melhorar a legibilidade */
+}
+
+#move{
+    display: block; 
+    margin-top: 30px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 10px 20px;
+    text-align: center;
+    position:absolute;
+    width: 45.5em;
+    transform: translate(0em,10em);
+}
+
+.right-image {
+    height: 20em; 
+    width: 22em;   
+}
+
+.left-image {
+    height: 20em; 
+    width: 22em;   
+}
+

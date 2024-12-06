@@ -19,6 +19,7 @@ $usuario_nome = $_SESSION['nome'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProLinker - Cliente</title>
     <link rel="stylesheet" href="../stylehome.css">
+    <link rel="stylesheet" href="../index.css">
 </head>
 <body>
     <header>
@@ -41,7 +42,7 @@ $usuario_nome = $_SESSION['nome'];
         <section id="solicitaservico">
             <h2>Para o Usuário que Solicita o Serviço</h2>
             <div class="section-content">
-                <p>Encontre rapidamente um técnico qualificado para resolver seus problemas em casa ou no trabalho. Conecte-se com profissionais da sua região!</p>
+                <p>Encontre rapidamente um técnico qualificado para resolver seus problemas em casa ou no trabalho. Conecte-se com profissionais da sua região! você, como cliente, pode publicar suas necessidades de serviço, sejam elas emergenciais ou planejadas, e encontrar prestadores capacitados prontos para ajudá-lo!</p>
                 <img src="../imgs/problemahidraulico.jpg" alt="Problema Hidráulico" class="right-image">
             </div>
         </section>
@@ -49,7 +50,7 @@ $usuario_nome = $_SESSION['nome'];
         <section id="profoportunidades">
             <h2>Aumente Seus Ganhos como Profissional</h2>
             <div class="section-content">
-                <p>Se você é um técnico em busca de novas oportunidades, junte-se ao ProLinker e amplie sua clientela. Ganhe mais oferecendo seus serviços a quem precisa!</p>
+                <p>Se você é um técnico em busca de novas oportunidades, junte-se ao ProLinker e amplie sua clientela! Nossa plataforma conecta você diretamente a clientes que precisam de seus serviços, facilitando sua visibilidade no mercado. Comece a receber solicitações de serviço em sua área, sejam elas de pequenos reparos ou grandes projetos!</p>
                 <img src="../imgs/eletricista.jpg" alt="Eletricista" class="left-image">
             </div>
         </section>
