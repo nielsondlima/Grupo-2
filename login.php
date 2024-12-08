@@ -43,7 +43,7 @@
                     <input type="password" name="senha" id="senha" required>
                     
                     <button type="submit">Entrar</button>
-                    <button type="button" onclick="window.location.href='form2.php';">Cadastre-se</button>
+                    <button type="button" onclick="window.location.href='form2.php';">Cadastree-se</button>
                 </form>
             </div>
         </main>
