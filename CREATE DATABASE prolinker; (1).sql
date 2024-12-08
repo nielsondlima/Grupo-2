@@ -68,3 +68,12 @@ CREATE TABLE log (
     data_hora DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
 );
+
+CREATE TABLE autenticacao_2fa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    codigo VARCHAR(6) NOT NULL,
+    expira_em DATETIME NOT NULL,
+    usado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
+);

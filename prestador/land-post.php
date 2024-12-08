@@ -12,6 +12,8 @@ include_once('../config/db.php');
 
 // Obter a especialidade do prestador logado
 $user_id = $_SESSION['id'];
+
+// Obter a especialidade do usuário
 $sql_user = "SELECT especialidade FROM usuario WHERE id_usuario = ?";
 $stmt_user = $conn->prepare($sql_user);
 $stmt_user->bind_param("i", $user_id);
@@ -23,6 +25,7 @@ if ($result_user->num_rows === 0) {
 }
 
 $especialidade = $result_user->fetch_assoc()['especialidade'];
+$stmt_user->close();
 
 // Buscar posts que correspondem à especialidade do prestador
 $sql_posts = "SELECT p.id_post, p.title, p.content, c.nome AS categoria, u.nome AS cliente

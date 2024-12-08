@@ -22,7 +22,6 @@
             <h2>Cadastro de Usuário</h2>
             <div class="section-content"> 
                 <form action="cadastro.php" method="post">
-
                     <div class="input-gp">
                         <div class="input-box">
                             <input id="input-1" type="text" name="input-1" placeholder="Digite seu nome completo" required>
@@ -31,7 +30,7 @@
                             <input id="date" type="text" name="date" placeholder="Data de nascimento" required>
                         </div>
                         <div class="input-box">
-                            <select name="genero" id="genero">
+                            <select name="genero" id="genero" required>
                                 <option value="" disabled selected>Gênero</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
@@ -69,7 +68,7 @@
                             <input id="cel" type="tel" name="cel" placeholder="Digite seu celular" required>
                         </div>
                         <div class="input-box">
-                            <select id="tipo_usuario" name="tipo_usuario" onchange="mostrarEspecialidade()">
+                            <select id="tipo_usuario" name="tipo_usuario" onchange="mostrarEspecialidade()" required>
                                 <option value="" disabled selected>Tipo de usuário</option>
                                 <option value="cliente">Cliente</option>
                                 <option value="prestador">Prestador</option>
@@ -90,15 +89,12 @@
                                 <option value="Administração">Administração</option>
                             </select>
                         </div>
-                        <!-- Botões colocados na mesma caixa da especialidade -->
                         <div class="input-box form-buttons">
                             <button type="reset">Limpar</button>
                             <button type="submit">Continuar</button>
                         </div>
                     </div>
                 </form>
-                <script src="formulario.js"></script>
-                <script src="Validacep.js"></script>
                 <script>
                     function mostrarEspecialidade() {
                         const tipoUsuario = document.getElementById('tipo_usuario').value;
@@ -129,6 +125,5 @@
             <p>&copy; 2024 ProLinker. Todos os direitos reservados.</p>
         </div>
     </footer>
-
 </body>
 </html>
