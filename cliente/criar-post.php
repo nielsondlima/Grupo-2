@@ -10,6 +10,9 @@ if (!isset($_SESSION['id'])) {
 // Incluir o arquivo de conexão com o banco de dados
 include_once('../config/db.php');
 
+// Variável para armazenar mensagens de erro ou sucesso
+$message = "";
+
 // Verificar se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['id']; // ID do cliente logado
@@ -18,32 +21,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoria = $conn->real_escape_string(trim($_POST['categoria'])); // Nome da categoria selecionada
 
     // Verificar se a categoria existe no banco e obter seu ID
-    $sql_categoria = "SELECT id_categoria FROM categorias WHERE nome = ?";
-    $stmt_categoria = $conn->prepare($sql_categoria);
-    $stmt_categoria->bind_param("s", $categoria);
-    $stmt_categoria->execute();
-    $result_categoria = $stmt_categoria->get_result();
-
-    if ($result_categoria->num_rows === 0) {
-        echo "<script>alert('Categoria inválida!');</script>";
+    // ** Forçamos o erro simulando que "Manutenção e Reformas" não existe **
+    if ($categoria === "Manutenção e Reformas") {
+        $message = "Erro: A categoria 'Manutenção e Reformas' não foi encontrada no sistema.";
     } else {
-        $categoria_id = $result_categoria->fetch_assoc()['id_categoria'];
+        $sql_categoria = "SELECT id_categoria FROM categorias WHERE nome = ?";
+        $stmt_categoria = $conn->prepare($sql_categoria);
+        $stmt_categoria->bind_param("s", $categoria);
+        $stmt_categoria->execute();
+        $result_categoria = $stmt_categoria->get_result();
 
-        // Inserir o post no banco de dados
-        $sql_insert = "INSERT INTO posts (user_id, title, content, categoria) VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql_insert);
-        $stmt->bind_param("issi", $user_id, $title, $content, $categoria_id);
-
-        if ($stmt->execute()) {
-            echo "<script>alert('Post criado com sucesso!'); window.location.href = '../meus-posts.php';</script>";
+        if ($result_categoria->num_rows === 0) {
+            $message = "Erro: A categoria selecionada não é válida.";
         } else {
-            echo "<script>alert('Erro ao criar o post. Por favor, tente novamente.');</script>";
+            $categoria_id = $result_categoria->fetch_assoc()['id_categoria'];
+
+            // Inserir o post no banco de dados
+            $sql_insert = "INSERT INTO posts (user_id, title, content, categoria) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql_insert);
+            $stmt->bind_param("issi", $user_id, $title, $content, $categoria_id);
+
+            if ($stmt->execute()) {
+                $message = "Post criado com sucesso!";
+            } else {
+                $message = "Erro ao criar o post. Por favor, tente novamente.";
+            }
+
+            $stmt->close();
         }
 
-        $stmt->close();
+        $stmt_categoria->close();
     }
-
-    $stmt_categoria->close();
 }
 
 $conn->close();
@@ -87,6 +95,25 @@ $conn->close();
             border-radius: 4px;
             box-sizing: border-box;
         }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +136,14 @@ $conn->close();
     <main class="container">
         <section id="criar-post">
             <h2>Criar Post</h2>
+
+            <!-- Exibir mensagem de erro ou sucesso -->
+            <?php if (!empty($message)): ?>
+                <div class="message <?php echo strpos($message, 'sucesso') !== false ? 'success' : 'error'; ?>">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
+
             <form method="POST" action="">
                 <div class="form-group">
                     <label for="title">Título:</label>
@@ -122,7 +157,7 @@ $conn->close();
                     <label for="categoria">Categoria:</label>
                     <select name="categoria" id="categoria" required>
                         <option value="" disabled selected>Selecione uma categoria</option>
-                        <option value="Manutenção">Manutenção e Reformas</option>
+                        <option value="Manutenção e Reformas">Manutenção e Reformas</option>
                         <option value="Tecnologia">Tecnologia</option>
                         <option value="Saúde">Saúde</option>
                         <option value="Marketing">Marketing</option>
@@ -130,7 +165,7 @@ $conn->close();
                         <option value="Fotografia">Fotografia</option>
                         <option value="Tradução">Tradução</option>
                         <option value="Educação">Educação</option>
-                        <option value="Artes">Artes Visuais</option>
+                        <option value="Artes Visuais">Artes Visuais</option>
                         <option value="Administração">Administração</option>
                     </select>
                 </div>
