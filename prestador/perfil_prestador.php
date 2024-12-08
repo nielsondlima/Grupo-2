@@ -51,33 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $especialidade = isset($_POST['especialidade']) ? $conn->real_escape_string(trim($_POST['especialidade'])) : $usuario['especialidade'];
     $senha = isset($_POST['senha']) && !empty($_POST['senha']) ? password_hash(trim($_POST['senha']), PASSWORD_DEFAULT) : $usuario['senha'];
 
-    // Gerar código 2FA
-    $codigo_2fa = random_int(100000, 999999);
-    $expira_em = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+    // Atualizar o banco de dados com as novas informações
+    $sql_update = "UPDATE usuario SET nome = ?, email = ?, celular = ?, endereco = ?, bairro = ?, cidade = ?, especialidade = ?, senha = ? WHERE id_usuario = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("ssssssssi", $nome, $email, $celular, $endereco, $bairro, $cidade, $especialidade, $senha, $id_usuario);
 
-    $sql_2fa = "INSERT INTO autenticacao_2fa (user_id, codigo, expira_em) VALUES (?, ?, ?)";
-    $stmt_2fa = $conn->prepare($sql_2fa);
-    $stmt_2fa->bind_param("iss", $id_usuario, $codigo_2fa, $expira_em);
-    $stmt_2fa->execute();
+    if ($stmt_update->execute()) {
+        echo "<script>alert('Informações atualizadas com sucesso!'); window.location.href = 'perfil_prestador.php';</script>";
+    } else {
+        echo "<script>alert('Erro ao atualizar as informações.');</script>";
+    }
 
-    // Enviar código (e-mail ou SMS)
-    mail($email, "Código de Verificação", "Seu código é: $codigo_2fa");
-
-    // Salvar informações temporariamente na sessão para aplicar após validação
-    $_SESSION['update_data'] = [
-        'nome' => $nome,
-        'email' => $email,
-        'celular' => $celular,
-        'endereco' => $endereco,
-        'bairro' => $bairro,
-        'cidade' => $cidade,
-        'especialidade' => $especialidade,
-        'senha' => $senha,
-    ];
-
-    // Redirecionar para a página de verificação
-    header("Location: ../verificar_2fa.php?user_id=$id_usuario");
-    exit();
+    $stmt_update->close();
 }
 
 $stmt->close();

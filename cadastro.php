@@ -93,21 +93,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     );
 
     if ($stmt_insert->execute()) {
+        // Capturar o ID do usuário recém-criado
         $user_id = $stmt_insert->insert_id;
 
-        // Gerar código 2FA
-        $codigo_2fa = random_int(100000, 999999);
-        $expira_em = date('Y-m-d H:i:s', strtotime('+5 minutes'));
-        $sql_2fa = "INSERT INTO autenticacao_2fa (user_id, codigo, expira_em) VALUES (?, ?, ?)";
-        $stmt_2fa = $conn->prepare($sql_2fa);
-        $stmt_2fa->bind_param("iss", $user_id, $codigo_2fa, $expira_em);
-        $stmt_2fa->execute();
+        // Iniciar sessão automaticamente para o usuário
+        $_SESSION['id'] = $user_id;
+        $_SESSION['nome'] = $nome;
+        $_SESSION['email'] = $email;
+        $_SESSION['tipo_usuario'] = $tipo_usuario_id;
 
-        // Enviar e-mail com o código (ajustar para SMS se necessário)
-        mail($email, "Seu Código de Verificação", "Seu código é: $codigo_2fa");
-
-        // Redirecionar para a verificação
-        echo "<script>alert('Um código foi enviado ao seu e-mail. Por favor, verifique.'); window.location.href = 'verificar_2fa.php?user_id=$user_id';</script>";
+        // Redirecionar para a página inicial com base no tipo de usuário
+        if ($tipo_usuario_id == 1) {
+            header("Location: cliente/index_cliente.php"); // Página inicial do cliente
+        } elseif ($tipo_usuario_id == 2) {
+            header("Location: prestador/index_prestador.php"); // Página inicial do prestador
+        }
+        exit();
     } else {
         echo "<script>alert('Erro ao cadastrar usuário. Tente novamente mais tarde.');</script>";
     }
