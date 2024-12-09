@@ -136,7 +136,7 @@ $result = $stmt->get_result();
                             <img src="../imgs/solicitacao.png" alt="Imagem Padrão do Post" class="post-image">
                             <div class="post-content">
                                 <h3><?php echo htmlspecialchars($post['title']); ?></h3>
-                                <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+                                <p><?php echo nl2br(string: htmlspecialchars($post['content'])); ?></p>
                                 <div class="post-meta">
                                     <p><strong>Publicado em:</strong> <?php echo date('d/m/Y H:i', strtotime($post['created_at'])); ?></p>
                                     <p><strong>Telefone para contato:</strong> <?php echo htmlspecialchars($post['celular']); ?></p>
