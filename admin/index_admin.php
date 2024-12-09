@@ -255,12 +255,6 @@ if (isset($_GET['delete_user'])) {
             </table>
         </section>
     </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 ProLinker. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 </body>
 </html>
 
