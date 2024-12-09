@@ -11,7 +11,7 @@ if (!isset($_SESSION['id']) || $_SESSION['tipo_usuario'] != 3) {
 // Incluir a configuração de conexão com o banco de dados
 include_once('../config/db.php');
 
-// Funções para exclusão e registro no log
+// Lógica de exclusão e registro no log
 if (isset($_GET['delete_post'])) {
     $post_id = intval($_GET['delete_post']);
     $sql_delete_post = "DELETE FROM posts WHERE id_post = ?";
@@ -77,6 +77,27 @@ if (isset($_GET['delete_user'])) {
     <title>ProLinker - Admin</title>
     <link rel="stylesheet" href="../stylehome.css">
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #f4f4f4;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
         .admin-section {
             margin-top: 20px;
         }
@@ -212,7 +233,7 @@ if (isset($_GET['delete_user'])) {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>ID Admin</th>
+                        <th>ID Usuário</th>
                         <th>Evento</th>
                         <th>Data/Hora</th>
                     </tr>

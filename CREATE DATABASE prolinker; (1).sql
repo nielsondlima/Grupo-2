@@ -58,7 +58,7 @@ CREATE TABLE posts (
     categoria INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (categoria) REFERENCES categorias(id_categoria),
-    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 
 -- Tabela de log de autenticação
@@ -66,9 +66,22 @@ CREATE TABLE log (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     data_hora DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
+    evento TEXT NOT NULL,
+    tipo_evento VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 
+-- Tabela para autenticação de dois fatores
+CREATE TABLE autenticacao_2fa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    codigo VARCHAR(6) NOT NULL,
+    expira_em DATETIME NOT NULL,
+    usado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- Inserir administrador padrão
 INSERT INTO usuario (nome, data_nasc, genero, nome_mae, cpf, senha, endereco, bairro, cidade, email, celular, tipo_usuario_id)
 VALUES (
     'Administrador Master', -- Nome
@@ -85,14 +98,8 @@ VALUES (
     3                       -- Tipo de usuário (Admin)
 );
 
-ALTER TABLE log
-ADD evento TEXT NOT NULL AFTER data_hora;
-
-ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_2;
-ALTER TABLE posts ADD CONSTRAINT posts_ibfk_2 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;
-
-ALTER TABLE log DROP FOREIGN KEY log_ibfk_1;
-ALTER TABLE log ADD CONSTRAINT log_ibfk_1 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;
-
-ALTER TABLE autenticacao_2fa DROP FOREIGN KEY autenticacao_2fa_ibfk_1;
-ALTER TABLE autenticacao_2fa ADD CONSTRAINT autenticacao_2fa_ibfk_1 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;
+-- Inserir logs iniciais para teste
+INSERT INTO log (user_id, data_hora, evento, tipo_evento)
+VALUES 
+(1, NOW(), 'Usuário ID 2 criado.', 'criação'),
+(1, NOW(), 'Login bem-sucedido.', 'login');

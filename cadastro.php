@@ -1,5 +1,4 @@
 <?php
-// Iniciar a sessão no início do arquivo
 session_start();
 
 // Incluir a configuração de conexão com o banco de dados
@@ -95,6 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt_insert->execute()) {
         // Capturar o ID do usuário recém-criado
         $user_id = $stmt_insert->insert_id;
+
+        // Registrar evento no log
+        $log_evento = "Novo usuário criado. ID: $user_id, Nome: $nome, Tipo: $tipo_usuario_id.";
+        $sql_log = "INSERT INTO log (user_id, data_hora, evento) VALUES (?, NOW(), ?)";
+        $stmt_log = $conn->prepare($sql_log);
+        $stmt_log->bind_param('is', $user_id, $log_evento);
+        $stmt_log->execute();
 
         // Iniciar sessão automaticamente para o usuário
         $_SESSION['id'] = $user_id;

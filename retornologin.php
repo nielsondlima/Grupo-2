@@ -34,6 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nome'] = $usuario['nome'];
                 $_SESSION['tipo_usuario'] = $usuario['tipo_usuario_id'];
 
+                // Registrar evento de login no log
+                $log_evento = "Usuário logou no sistema. ID: " . $usuario['id_usuario'];
+                $sql_log = "INSERT INTO log (user_id, data_hora, evento) VALUES (?, NOW(), ?)";
+                $stmt_log = $conn->prepare($sql_log);
+                if ($stmt_log) {
+                    $stmt_log->bind_param('is', $usuario['id_usuario'], $log_evento);
+                    $stmt_log->execute();
+                    $stmt_log->close();
+                }
+
                 // Redirecionar com base no tipo de usuário
                 switch ($usuario['tipo_usuario_id']) {
                     case 1: // Cliente
