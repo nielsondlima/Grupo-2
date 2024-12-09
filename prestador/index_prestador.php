@@ -41,7 +41,7 @@ $usuario_nome = $_SESSION['nome'];
         <section id="solicitaservico">
             <h2>Solicitações de Serviço</h2>
             <div class="section-content">
-                <p>Acesse as solicitações disponíveis na sua área de especialidade e conecte-se com os clientes.</p>
+                <p>Encontre rapidamente um técnico qualificado para resolver seus problemas em casa ou no trabalho. Conecte-se com profissionais da sua região! você, como cliente, pode publicar suas necessidades de serviço, sejam elas emergenciais ou planejadas, e encontrar prestadores capacitados prontos para ajudá-lo!</p>
                 <img src="../imgs/solicitacao.png" alt="Solicitações" class="right-image">
             </div>
         </section>
