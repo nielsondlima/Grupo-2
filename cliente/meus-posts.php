@@ -25,6 +25,31 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Verificar se uma solicitação de exclusão foi feita
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_post'])) {
+    $post_id = intval($_POST['delete_post']);
+
+    // Verificar se o post pertence ao usuário logado
+    $sql_check_owner = "SELECT id_post FROM posts WHERE id_post = ? AND user_id = ?";
+    $stmt_check = $conn->prepare($sql_check_owner);
+    $stmt_check->bind_param("ii", $post_id, $user_id);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+
+    if ($result_check->num_rows > 0) {
+        // Excluir o post
+        $sql_delete = "DELETE FROM posts WHERE id_post = ?";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("i", $post_id);
+        $stmt_delete->execute();
+        $stmt_delete->close();
+        echo "<script>alert('Post excluído com sucesso.'); window.location.href = 'meus-posts.php';</script>";
+    } else {
+        echo "<script>alert('Você não tem permissão para excluir este post.'); window.location.href = 'meus-posts.php';</script>";
+    }
+
+    $stmt_check->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,21 +60,20 @@ $result = $stmt->get_result();
     <title>ProLinker - Meus Posts</title>
     <link rel="stylesheet" href="../stylehome.css">
     <style>
-        /* Estilo para a navegação */
         nav {
             padding: 10px 0;
         }
 
         nav a {
-            color: #fff; /* Cor do texto branca */
+            color: #fff;
             padding: 10px 15px;
             text-decoration: none;
             font-weight: bold;
         }
 
         nav a:hover {
-            background-color: #0056b3; /* Cor de fundo ao passar o mouse */
-            color: #fff; /* Cor do texto continua branca */
+            background-color: #0056b3;
+            color: #fff;
         }
 
         .post {
@@ -93,18 +117,28 @@ $result = $stmt->get_result();
             margin-bottom: 10px;
         }
 
+        .delete-button {
+            display: inline-block;
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+
         .section-content {
             margin-bottom: 30px;
             display: flex;
-            flex-direction: column; /* Coloca os posts um abaixo do outro */
-            gap: 20px; /* Adiciona um espaçamento entre os posts */
+            flex-direction: column;
+            gap: 20px;
         }
-
-        .user-welcome {
-            font-size: 1.1em;
-            color: #fff; /* Cor branca para o texto "Bem-vindo" */
-        }
-
     </style>
 </head>
 <body>
@@ -131,16 +165,19 @@ $result = $stmt->get_result();
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($post = $result->fetch_assoc()): ?>
                         <div class="post">
-                            <!-- Exibir a categoria com o nome -->
                             <div class="category"><?php echo htmlspecialchars($post['categoria']); ?></div>
                             <img src="../imgs/solicitacao.png" alt="Imagem Padrão do Post" class="post-image">
                             <div class="post-content">
                                 <h3><?php echo htmlspecialchars($post['title']); ?></h3>
-                                <p><?php echo nl2br(string: htmlspecialchars($post['content'])); ?></p>
+                                <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
                                 <div class="post-meta">
                                     <p><strong>Publicado em:</strong> <?php echo date('d/m/Y H:i', strtotime($post['created_at'])); ?></p>
                                     <p><strong>Telefone para contato:</strong> <?php echo htmlspecialchars($post['celular']); ?></p>
                                 </div>
+                                <form method="POST" action="">
+                                    <input type="hidden" name="delete_post" value="<?php echo $post['id_post']; ?>">
+                                    <button type="submit" class="delete-button">Excluir Post</button>
+                                </form>
                             </div>
                         </div>
                     <?php endwhile; ?>
