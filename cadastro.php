@@ -93,7 +93,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     );
 
     if ($stmt_insert->execute()) {
-        echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = 'login.php';</script>";
+        // Capturar o ID do usuário recém-criado
+        $user_id = $stmt_insert->insert_id;
+
+        // Iniciar sessão automaticamente para o usuário
+        $_SESSION['id'] = $user_id;
+        $_SESSION['nome'] = $nome;
+        $_SESSION['email'] = $email;
+        $_SESSION['tipo_usuario'] = $tipo_usuario_id;
+
+        // Redirecionar para a página inicial com base no tipo de usuário
+        if ($tipo_usuario_id == 1) {
+            header("Location: cliente/index_cliente.php"); // Página inicial do cliente
+        } elseif ($tipo_usuario_id == 2) {
+            header("Location: prestador/index_prestador.php"); // Página inicial do prestador
+        }
+        exit();
     } else {
         echo "<script>alert('Erro ao cadastrar usuário. Tente novamente mais tarde.');</script>";
     }

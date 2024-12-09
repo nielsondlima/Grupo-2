@@ -7,7 +7,7 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-// Incluindo o arquivo de conexão
+// Incluindo o arquivo de conexão com o banco de dados
 include_once('../config/db.php');
 
 // Verifique se a conexão foi estabelecida
@@ -48,24 +48,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     $endereco = $conn->real_escape_string(trim($_POST['endereco']));
     $bairro = $conn->real_escape_string(trim($_POST['bairro']));
     $cidade = $conn->real_escape_string(trim($_POST['cidade']));
+    $especialidade = isset($_POST['especialidade']) ? $conn->real_escape_string(trim($_POST['especialidade'])) : $usuario['especialidade'];
     $senha = isset($_POST['senha']) && !empty($_POST['senha']) ? password_hash(trim($_POST['senha']), PASSWORD_DEFAULT) : $usuario['senha'];
 
-    $sql_update = "UPDATE usuario SET nome = ?, email = ?, celular = ?, endereco = ?, bairro = ?, cidade = ?, senha = ? WHERE id_usuario = ?";
+    // Atualizar o banco de dados com as novas informações
+    $sql_update = "UPDATE usuario SET nome = ?, email = ?, celular = ?, endereco = ?, bairro = ?, cidade = ?, especialidade = ?, senha = ? WHERE id_usuario = ?";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("sssssssi", $nome, $email, $celular, $endereco, $bairro, $cidade, $senha, $id_usuario);
+    $stmt_update->bind_param("ssssssssi", $nome, $email, $celular, $endereco, $bairro, $cidade, $especialidade, $senha, $id_usuario);
 
     if ($stmt_update->execute()) {
-        echo "<script>alert('Informações atualizadas com sucesso!');</script>";
-        // Atualize as informações do usuário na variável para refletir no formulário
-        $usuario['nome'] = $nome;
-        $usuario['email'] = $email;
-        $usuario['celular'] = $celular;
-        $usuario['endereco'] = $endereco;
-        $usuario['bairro'] = $bairro;
-        $usuario['cidade'] = $cidade;
+        echo "<script>alert('Informações atualizadas com sucesso!'); window.location.href = 'perfil_prestador.php';</script>";
     } else {
         echo "<script>alert('Erro ao atualizar as informações.');</script>";
     }
+
     $stmt_update->close();
 }
 
@@ -102,7 +98,7 @@ $conn->close();
     <main class="container">
         <section id="perfil">
             <form method="POST" action="" class="perfil-form">
-            <h2>Editar Meu Perfil</h2>
+                <h2>Editar Meu Perfil</h2>
                 <div class="form-group">
                     <label for="nome">Nome:</label>
                     <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
@@ -126,6 +122,21 @@ $conn->close();
                 <div class="form-group">
                     <label for="cidade">Cidade:</label>
                     <input type="text" name="cidade" id="cidade" value="<?php echo htmlspecialchars($usuario['cidade']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="especialidade">Especialidade:</label>
+                    <select name="especialidade" id="especialidade" required>
+                        <option value="Manutenção" <?php if ($usuario['especialidade'] == "Manutenção") echo "selected"; ?>>Manutenção e Reformas</option>
+                        <option value="Tecnologia" <?php if ($usuario['especialidade'] == "Tecnologia") echo "selected"; ?>>Tecnologia</option>
+                        <option value="Saúde" <?php if ($usuario['especialidade'] == "Saúde") echo "selected"; ?>>Saúde</option>
+                        <option value="Marketing" <?php if ($usuario['especialidade'] == "Marketing") echo "selected"; ?>>Marketing</option>
+                        <option value="Produção" <?php if ($usuario['especialidade'] == "Produção") echo "selected"; ?>>Produção</option>
+                        <option value="Fotografia" <?php if ($usuario['especialidade'] == "Fotografia") echo "selected"; ?>>Fotografia</option>
+                        <option value="Tradução" <?php if ($usuario['especialidade'] == "Tradução") echo "selected"; ?>>Tradução</option>
+                        <option value="Educação" <?php if ($usuario['especialidade'] == "Educação") echo "selected"; ?>>Educação</option>
+                        <option value="Artes" <?php if ($usuario['especialidade'] == "Artes") echo "selected"; ?>>Artes Visuais</option>
+                        <option value="Administração" <?php if ($usuario['especialidade'] == "Administração") echo "selected"; ?>>Administração</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha (deixe em branco para não alterar):</label>

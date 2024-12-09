@@ -68,3 +68,31 @@ CREATE TABLE log (
     data_hora DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES usuario(id_usuario)
 );
+
+INSERT INTO usuario (nome, data_nasc, genero, nome_mae, cpf, senha, endereco, bairro, cidade, email, celular, tipo_usuario_id)
+VALUES (
+    'Administrador Master', -- Nome
+    '1970-01-01',           -- Data de nascimento
+    'masculino',            -- Gênero
+    'Maria da Silva',       -- Nome da mãe
+    '000.000.000-00',       -- CPF
+    PASSWORD('senha123'),   -- Senha (criptografada com função do MySQL)
+    'Rua Principal, 123',   -- Endereço
+    'Centro',               -- Bairro
+    'Cidade Exemplo',       -- Cidade
+    'admin@prolinker.com',  -- E-mail
+    '11999999999',          -- Celular
+    3                       -- Tipo de usuário (Admin)
+);
+
+ALTER TABLE log
+ADD evento TEXT NOT NULL AFTER data_hora;
+
+ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_2;
+ALTER TABLE posts ADD CONSTRAINT posts_ibfk_2 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;
+
+ALTER TABLE log DROP FOREIGN KEY log_ibfk_1;
+ALTER TABLE log ADD CONSTRAINT log_ibfk_1 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;
+
+ALTER TABLE autenticacao_2fa DROP FOREIGN KEY autenticacao_2fa_ibfk_1;
+ALTER TABLE autenticacao_2fa ADD CONSTRAINT autenticacao_2fa_ibfk_1 FOREIGN KEY (user_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE;

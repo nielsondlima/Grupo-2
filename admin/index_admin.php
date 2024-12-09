@@ -11,23 +11,59 @@ if (!isset($_SESSION['id']) || $_SESSION['tipo_usuario'] != 3) {
 // Incluir a configuração de conexão com o banco de dados
 include_once('../config/db.php');
 
-// Funções para exclusão
+// Funções para exclusão e registro no log
 if (isset($_GET['delete_post'])) {
     $post_id = intval($_GET['delete_post']);
     $sql_delete_post = "DELETE FROM posts WHERE id_post = ?";
     $stmt = $conn->prepare($sql_delete_post);
-    $stmt->bind_param('i', $post_id);
-    $stmt->execute();
+
+    if ($stmt) {
+        $stmt->bind_param('i', $post_id);
+        if ($stmt->execute()) {
+            // Registrar no log
+            $log_evento = "Postagem ID $post_id excluída.";
+            $sql_log = "INSERT INTO log (user_id, data_hora, evento) VALUES (?, NOW(), ?)";
+            $stmt_log = $conn->prepare($sql_log);
+            $stmt_log->bind_param('is', $_SESSION['id'], $log_evento);
+            $stmt_log->execute();
+        }
+    }
     header("Location: index_admin.php");
     exit();
 }
 
 if (isset($_GET['delete_user'])) {
     $user_id = intval($_GET['delete_user']);
+
+    // Excluir registros relacionados
+    $sql_delete_posts = "DELETE FROM posts WHERE user_id = ?";
+    $stmt_posts = $conn->prepare($sql_delete_posts);
+    $stmt_posts->bind_param('i', $user_id);
+    $stmt_posts->execute();
+
+    $sql_delete_logs = "DELETE FROM log WHERE user_id = ?";
+    $stmt_logs = $conn->prepare($sql_delete_logs);
+    $stmt_logs->bind_param('i', $user_id);
+    $stmt_logs->execute();
+
+    $sql_delete_2fa = "DELETE FROM autenticacao_2fa WHERE user_id = ?";
+    $stmt_2fa = $conn->prepare($sql_delete_2fa);
+    $stmt_2fa->bind_param('i', $user_id);
+    $stmt_2fa->execute();
+
+    // Excluir o usuário
     $sql_delete_user = "DELETE FROM usuario WHERE id_usuario = ?";
-    $stmt = $conn->prepare($sql_delete_user);
-    $stmt->bind_param('i', $user_id);
-    $stmt->execute();
+    $stmt_user = $conn->prepare($sql_delete_user);
+    $stmt_user->bind_param('i', $user_id);
+    if ($stmt_user->execute()) {
+        // Registrar no log
+        $log_evento = "Usuário ID $user_id excluído.";
+        $sql_log = "INSERT INTO log (user_id, data_hora, evento) VALUES (?, NOW(), ?)";
+        $stmt_log = $conn->prepare($sql_log);
+        $stmt_log->bind_param('is', $_SESSION['id'], $log_evento);
+        $stmt_log->execute();
+    }
+
     header("Location: index_admin.php");
     exit();
 }
@@ -75,20 +111,6 @@ if (isset($_GET['delete_user'])) {
         .action-links a:hover {
             text-decoration: underline;
         }
-
-        .add-button {
-            display: inline-block;
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .add-button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -104,7 +126,6 @@ if (isset($_GET['delete_user'])) {
     <main class="container">
         <section class="admin-section">
             <h2>Gerenciar Posts</h2>
-            <a href="criar-post-admin.php" class="add-button">Adicionar Post</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -117,7 +138,15 @@ if (isset($_GET['delete_user'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql_posts = "SELECT * FROM posts";
+                    $sql_posts = "
+                        SELECT 
+                            p.id_post, 
+                            p.title, 
+                            p.content, 
+                            c.nome AS categoria
+                        FROM posts p
+                        JOIN categorias c ON p.categoria = c.id_categoria
+                    ";
                     $result_posts = $conn->query($sql_posts);
                     while ($post = $result_posts->fetch_assoc()):
                     ?>
@@ -127,7 +156,6 @@ if (isset($_GET['delete_user'])) {
                             <td><?php echo htmlspecialchars($post['content']); ?></td>
                             <td><?php echo htmlspecialchars($post['categoria']); ?></td>
                             <td class="action-links">
-                                <a href="editar-post-admin.php?id=<?php echo $post['id_post']; ?>">Editar</a>
                                 <a href="?delete_post=<?php echo $post['id_post']; ?>" onclick="return confirm('Tem certeza que deseja excluir este post?');">Excluir</a>
                             </td>
                         </tr>
@@ -138,7 +166,6 @@ if (isset($_GET['delete_user'])) {
 
         <section class="admin-section">
             <h2>Gerenciar Usuários</h2>
-            <a href="criar-usuario-admin.php" class="add-button">Adicionar Usuário</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -171,9 +198,36 @@ if (isset($_GET['delete_user'])) {
                                 ?>
                             </td>
                             <td class="action-links">
-                                <a href="editar-usuario-admin.php?id=<?php echo $usuario['id_usuario']; ?>">Editar</a>
                                 <a href="?delete_user=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
                             </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="admin-section">
+            <h2>Log do Sistema</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Admin</th>
+                        <th>Evento</th>
+                        <th>Data/Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql_logs = "SELECT * FROM log ORDER BY id_log DESC";
+                    $result_logs = $conn->query($sql_logs);
+                    while ($log = $result_logs->fetch_assoc()):
+                    ?>
+                        <tr>
+                            <td><?php echo $log['id_log']; ?></td>
+                            <td><?php echo $log['user_id']; ?></td>
+                            <td><?php echo htmlspecialchars($log['evento']); ?></td>
+                            <td><?php echo htmlspecialchars($log['data_hora']); ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
