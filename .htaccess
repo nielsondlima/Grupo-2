@@ -1,0 +1,2 @@
+ErrorDocument 404 /error.php?message=Página não encontrada
+ErrorDocument 500 /error.php?message=Erro interno do servidor
